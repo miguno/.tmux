@@ -371,10 +371,12 @@ set -g mouse on
 # Move cursor with h,j,k,l etc. like in vim.
 #set-window-option -g mode-keys vi
 setw -g mode-keys vi
+
 # Scroll pages down/up with J/K (capital letters!) when in tmux copy mode.
 # Enter tmux copy mode with `Ctrl-b [`.  Exit copy mode with ESC or `q`.
 #
 # Scroll pages down/up with Ctrl-b and Ctrl-f, like in vim.
+# On macOS, you can also scroll page up/down with Alt-b and Alt-f.
 # IMPORTANT: In tmux you must press Ctrl-b TWICE quickly to scroll up,
 # because Ctrl-b is the default tmux leader key.
 bind-key -T copy-mode-vi Down send-keys -X page-down
@@ -383,6 +385,8 @@ bind-key -T copy-mode-vi Up   send-keys -X page-up
 # because in tmux you must press Ctrl-b TWICE to scroll up.
 bind-key -T copy-mode-vi J    send-keys -X page-down
 bind-key -T copy-mode-vi K    send-keys -X page-up
+# Also supported by default, like in vim:
+# - Ctrl-u and Ctrl-d: scroll half-page up/down
 ### }}} Keybinds for scrolling
 
 # replace C-b by C-a instead of using both prefixes
