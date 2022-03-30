@@ -356,12 +356,32 @@ tmux_conf_copy_to_os_clipboard=false
 #set -g history-limit 10000
 
 # start with mouse mode enabled
-#set -g mouse on
+# This lets you scroll up/down with the trackpad on macOS
+set -g mouse on
 
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 #set -g status-keys vi
 #set -g mode-keys vi
+
+### Keybinds for scrolling {{{
+# Set tmux to Vi mode.
+# Move cursor with h,j,k,l etc. like in vim.
+#set-window-option -g mode-keys vi
+setw -g mode-keys vi
+# Scroll pages down/up with J/K (capital letters!) when in tmux copy mode.
+# Enter tmux copy mode with `Ctrl-b [`.  Exit copy mode with ESC or `q`.
+#
+# Scroll pages down/up with Ctrl-b and Ctrl-f, like in vim.
+# IMPORTANT: In tmux you must press Ctrl-b TWICE quickly to scroll up,
+# because Ctrl-b is the default tmux leader key.
+bind-key -T copy-mode-vi Down send-keys -X page-down
+bind-key -T copy-mode-vi Up   send-keys -X page-up
+# The J/K binds are perhaps more ergonomic than Ctrl-b and Ctrl-f in tmux,
+# because in tmux you must press Ctrl-b TWICE to scroll up.
+bind-key -T copy-mode-vi J    send-keys -X page-down
+bind-key -T copy-mode-vi K    send-keys -X page-up
+### }}} Keybinds for scrolling
 
 # replace C-b by C-a instead of using both prefixes
 # set -gu prefix2
