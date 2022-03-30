@@ -478,6 +478,12 @@ set -g default-terminal "${TERM}"
 set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
 set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
+# Required to fix colors in nvim when run in alacritty+tmux.
+# Requires additionally `env.TERM: xterm-256color` in `~/.alacritty.yml`.
+# See https://www.reddit.com/r/tmux/comments/onom6t/comment/h5tyvbr/
+set -g default-terminal 'xterm-256color'
+set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
+
 # Do NOT enable GNU-Screen compatible prefix (`Ctrl-a ...`), because it
 # conflicts with cursor movement in iTerm on macOS, where `Ctrl-a` moves the
 # cursor to the beginning of the command line
