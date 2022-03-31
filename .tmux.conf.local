@@ -355,7 +355,7 @@ tmux_conf_copy_to_os_clipboard=false
 # this is the place to override or undo settings
 
 # increase history size
-#set -g history-limit 10000
+set -g history-limit 10000
 
 # start with mouse mode enabled
 # This lets you scroll up/down with the trackpad on macOS
@@ -363,14 +363,44 @@ set -g mouse on
 
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
-#set -g status-keys vi
-#set -g mode-keys vi
+set -g status-keys vi
+set -g mode-keys vi
+
+# move status line to top
+#set -g status-position top
+
+# https://github.com/folke/tokyonight.nvim#making-undercurls-work-properly-in-tmux
+# Undercurl
+#set -g default-terminal "${TERM}"
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m' # underscore colors
+
+# Required to fix colors in nvim when run in alacritty+tmux.
+# Requires additionally `env.TERM: xterm-256color` in `~/.alacritty.yml`.
+# See https://www.reddit.com/r/tmux/comments/onom6t/comment/h5tyvbr/
+set -g default-terminal 'xterm-256color'
+set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
+
+###
+### Keybinds
+###
+
+# Do NOT enable GNU-Screen compatible prefix (`Ctrl-a ...`), because it
+# conflicts with cursor movement in iTerm on macOS, where `Ctrl-a` moves the
+# cursor to the beginning of the command line
+set -gu prefix2
+unbind C-a
+
+# replace C-b by C-a instead of using both prefixes
+# set -gu prefix2
+# unbind C-a
+# unbind C-b
+# set -g prefix C-a
+# bind C-a send-prefix
+
 
 ### Keybinds for scrolling {{{
-# Set tmux to Vi mode.
-# Move cursor with h,j,k,l etc. like in vim.
-#set-window-option -g mode-keys vi
-setw -g mode-keys vi
+# If `set -g mode-keys vi`, then you can move cursor with h,j,k,l etc.
 
 # Scroll pages down/up with J/K (capital letters!) when in tmux copy mode.
 # Enter tmux copy mode with `Ctrl-b [`.  Exit copy mode with ESC or `q`.
@@ -378,7 +408,7 @@ setw -g mode-keys vi
 # Scroll pages down/up with Ctrl-b and Ctrl-f, like in vim.
 # On macOS, you can also scroll page up/down with Alt-b and Alt-f.
 # IMPORTANT: In tmux you must press Ctrl-b TWICE quickly to scroll up,
-# because Ctrl-b is the default tmux leader key.
+# because Ctrl-b is the default tmux prefix key.
 bind-key -T copy-mode-vi Down send-keys -X page-down
 bind-key -T copy-mode-vi Up   send-keys -X page-up
 # The J/K binds are perhaps more ergonomic than Ctrl-b and Ctrl-f in tmux,
@@ -401,6 +431,13 @@ bind-key -T copy-mode-vi K    send-keys -X page-up
 
 # move status line to top
 #set -g status-position top
+
+### Window management {{{
+# Move a window to the left with Alt-Left (to reorder windows)
+bind-key -n M-Left  swap-window -t -1\; select-window -t -1
+# Move a window to the right with Alt-Right (to reorder windows)
+bind-key -n M-Right swap-window -t +1\; select-window -t +1
+### }}} Window management
 
 
 # -- tpm -----------------------------------------------------------------------
@@ -472,26 +509,3 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 # "$@"
 # # /!\ do not remove the previous line
 
-# https://github.com/folke/tokyonight.nvim#making-undercurls-work-properly-in-tmux
-# Undercurl
-set -g default-terminal "${TERM}"
-set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
-set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
-
-# Required to fix colors in nvim when run in alacritty+tmux.
-# Requires additionally `env.TERM: xterm-256color` in `~/.alacritty.yml`.
-# See https://www.reddit.com/r/tmux/comments/onom6t/comment/h5tyvbr/
-set -g default-terminal 'xterm-256color'
-set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
-
-# Do NOT enable GNU-Screen compatible prefix (`Ctrl-a ...`), because it
-# conflicts with cursor movement in iTerm on macOS, where `Ctrl-a` moves the
-# cursor to the beginning of the command line
-set -gu prefix2
-unbind C-a
-
-### Window management (think: iTerm tabs)
-# Move a window to the left with Alt-Left (to reorder windows)
-bind-key -n M-Left  swap-window -t -1\; select-window -t -1
-# Move a window to the right with Alt-Right (to reorder windows)
-bind-key -n M-Right swap-window -t +1\; select-window -t +1
