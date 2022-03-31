@@ -20,7 +20,7 @@ tmux_conf_new_session_prompt=false
 #   - true
 #   - false (default)
 #   - disabled (do not modify new-window bindings)
-tmux_conf_new_window_retain_current_path=false
+tmux_conf_new_window_retain_current_path=true
 
 # new window tries to reconnect ssh sessions, possible values are:
 #   - true
@@ -491,13 +491,6 @@ set -gu prefix2
 unbind C-a
 
 ### Window management (think: iTerm tabs)
-# Create new window with current working directory of active window, with `Ctrl-b h`.
-# (I have NO FLIPPING IDEA why `bind h new-window -c "#{pane_current_path}"` does not work here...)
-#
-# Caution: This bind is re-used in alacritty, so if you change it here, also
-# update the alacritty configuration!
-unbind h
-bind h send-keys 'tmux new-window -c "#{pane_current_path}"' Enter
 # Move a window to the left with Alt-Left (to reorder windows)
 bind-key -n M-Left  swap-window -t -1\; select-window -t -1
 # Move a window to the right with Alt-Right (to reorder windows)
