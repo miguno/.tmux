@@ -489,3 +489,9 @@ set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
 # cursor to the beginning of the command line
 set -gu prefix2
 unbind C-a
+
+### Window management
+# Move a window (think: tab) to the left, to reorder windows
+bind-key -n M-Left  swap-window -t -1\; select-window -t -1
+# Move a window (think: tab) to the right, to reorder windows
+bind-key -n M-Right swap-window -t +1\; select-window -t +1
