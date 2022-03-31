@@ -490,8 +490,15 @@ set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
 set -gu prefix2
 unbind C-a
 
-### Window management
-# Move a window (think: tab) to the left, to reorder windows
+### Window management (think: iTerm tabs)
+# Create new window with current working directory of active window, with `Ctrl-b h`.
+# (I have NO FLIPPING IDEA why `bind h new-window -c "#{pane_current_path}"` does not work here...)
+#
+# Caution: This bind is re-used in alacritty, so if you change it here, also
+# update the alacritty configuration!
+unbind h
+bind h send-keys -t.- 'tmux new-window -c "#{pane_current_path}"' Enter
+# Move a window to the left with Alt-Left (to reorder windows)
 bind-key -n M-Left  swap-window -t -1\; select-window -t -1
-# Move a window (think: tab) to the right, to reorder windows
+# Move a window to the right with Alt-Right (to reorder windows)
 bind-key -n M-Right swap-window -t +1\; select-window -t +1
