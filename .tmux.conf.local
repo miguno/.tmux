@@ -369,6 +369,9 @@ set -g mode-keys vi
 # move status line to top
 set -g status-position top
 
+# redraw status line every 3 seconds
+set -g status-interval 3
+
 # https://github.com/folke/tokyonight.nvim#making-undercurls-work-properly-in-tmux
 # Undercurl
 #set -g default-terminal "${TERM}"
