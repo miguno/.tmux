@@ -497,7 +497,7 @@ unbind C-a
 # Caution: This bind is re-used in alacritty, so if you change it here, also
 # update the alacritty configuration!
 unbind h
-bind h send-keys -t.- 'tmux new-window -c "#{pane_current_path}"' Enter
+bind h send-keys 'tmux new-window -c "#{pane_current_path}"' Enter
 # Move a window to the left with Alt-Left (to reorder windows)
 bind-key -n M-Left  swap-window -t -1\; select-window -t -1
 # Move a window to the right with Alt-Right (to reorder windows)
