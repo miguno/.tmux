@@ -372,17 +372,18 @@ set -g status-position top
 # redraw status line every 3 seconds
 set -g status-interval 3
 
-# https://github.com/folke/tokyonight.nvim#making-undercurls-work-properly-in-tmux
-# Undercurl
-#set -g default-terminal "${TERM}"
-set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
-set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m' # underscore colors
-
 # Required to fix colors in nvim when run in alacritty+tmux.
 # Requires additionally `env.TERM: xterm-256color` in `~/.alacritty.yml`.
 # See https://www.reddit.com/r/tmux/comments/onom6t/comment/h5tyvbr/
 set -g default-terminal 'xterm-256color'
 set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
+
+# https://github.com/folke/tokyonight.nvim#making-undercurls-work-properly-in-tmux
+# Undercurl
+#set -g default-terminal "${TERM}" # THIS MIGHT BREAK THE COLOR FIX ABOVE!
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m' # underscore colors
+
 
 ###
 ### Keybinds
