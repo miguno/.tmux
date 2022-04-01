@@ -443,6 +443,13 @@ bind-key -n M-Left  swap-window -t -1\; select-window -t -1
 bind-key -n M-Right swap-window -t +1\; select-window -t +1
 ### }}} Window management
 
+### Pane management {{{
+# Moving panes
+bind , swap-pane -s '{left-of}'  # move active pane left
+bind > swap-pane -s '{down-of}'  # move active pane down
+bind < swap-pane -s '{up-of}'    # move active pane up
+bind . swap-pane -s '{right-of}' # move active pane right
+### }}} Pane management
 
 # -- tpm -----------------------------------------------------------------------
 
