@@ -36,30 +36,16 @@ You can install Oh my tmux! at any of the following locations:
 Installing in `~`:
 
 ```
+### For usage
+$ curl -o "$HOME/.tmux.conf" https://raw.githubusercontent.com/miguno/.tmux/refs/heads/master-miguno/.tmux.conf
+$ curl -o "$HOME/.tmux.conf.local" https://raw.githubusercontent.com/miguno/.tmux/refs/heads/master-miguno/.tmux.conf.local
+
+
 ### For development
 $ git clone git@github.com:miguno/.tmux.git ~/git/tmux-config
 $ cd ~/git/tmux-config && git checkout master-miguno
 $ ln -s -f ~/git/tmux-config/.tmux.conf ~/.tmux.conf
-
-# Alternatively, you can also COPY `.tmux.conf.local` so that any local
-# changes are not overwritten by changes in this repository.
-#
-#     $ cp ~/git/tmux-config/.tmux.conf.local ~/.tmux.conf.local
-#
 $ ln -s -f ~/git/tmux-config/.tmux.conf.local ~/.tmux.conf.local
-
-
-### For usage
-$ git clone https://github.com/miguno/.tmux ~/.tmux
-$ cd ~/git/tmux-config && git checkout master-miguno
-$ ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf
-
-# Alternatively, you can also COPY `.tmux.conf.local` so that any local
-# changes are not overwritten by changes in this repository.
-#
-#     $ cp ~/.tmux/.tmux.conf.local ~/.tmux.conf.local
-#
-$ ln -s -f ~/.tmux/.tmux.conf.local ~/.tmux.conf.local
 ```
 
 Installing in `$XDG_CONFIG_HOME/tmux`:
